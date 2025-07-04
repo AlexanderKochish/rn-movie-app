@@ -4,17 +4,23 @@
     "slug": "movie-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/watcher.png",
+    "icon": "./assets/images/watcher-icon.png",
     "scheme": "movieapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff",
+      "imageWidth": 100,
       "image": "./assets/images/watcher.png"
     },
     "ios": {
       "supportsTablet": true,
       "googleServicesFile": "./assets/GoogleService-Info.plist",
-      "bundleIdentifier": "com.kochish.movieapp"
+      "bundleIdentifier": "com.kochish.movieapp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -37,8 +43,8 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/watcher.png",
-          "imageWidth": 200,
+          "image": "./assets/images/watcher-icon.png",
+          "imageWidth": 100,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
@@ -55,6 +61,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "a24536df-4387-4fdc-a771-0aa2f6c8e17e"
+      }
     }
   }
 }
