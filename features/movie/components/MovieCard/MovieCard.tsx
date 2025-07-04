@@ -9,12 +9,13 @@ type Props = {
   imageUrl: string
   title?: string
   vote_average?: number
+  id: number
 }
 
-const MovieCard = ({ imageUrl, title, vote_average }: Props) => {
+const MovieCard = ({ imageUrl, title, vote_average, id }: Props) => {
   return (
     <View style={{ width: 150, margin: 5 }}>
-      <Link href={'/movie/[id]'}>
+      <Link href={`/movie/${id}`}>
         <Image
           source={{
             uri: `${imageUrl}`,

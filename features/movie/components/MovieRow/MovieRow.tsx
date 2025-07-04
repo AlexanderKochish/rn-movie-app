@@ -23,6 +23,7 @@ const MovieRow = ({ items, title }: Props) => {
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
           <MovieCard
+            id={item.id}
             vote_average={item.vote_average}
             title={item.title || item.original_title}
             imageUrl={`${process.env.EXPO_PUBLIC_IMG_W300}${item.poster_path || item.backdrop_path}`}
