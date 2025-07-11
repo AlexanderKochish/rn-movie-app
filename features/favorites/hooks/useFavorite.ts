@@ -1,0 +1,5 @@
+import { useUserCollection } from '@/shared/hooks/useUserCollection'
+import { FirestoreMovie, FirestoreMovieInput } from '@/shared/types/types'
+
+export const useFavorite = () =>
+  useUserCollection<FirestoreMovieInput, FirestoreMovie>('favorite')

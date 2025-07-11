@@ -1,4 +1,4 @@
-export type TrendingMovie = {
+export type Movie = {
   adult: boolean
   backdrop_path: string | null
   id: number
@@ -19,9 +19,9 @@ export type TrendingMovie = {
   vote_count: number
 }
 
-export type TrendingMoviesResponse = {
+export type MoviesResponse = {
   page: number
-  results: TrendingMovie[]
+  results: Movie[]
   total_pages: number
   total_results: number
 }
@@ -111,3 +111,24 @@ export type CrewMember = {
   department: string
   job: string
 }
+
+export type Review = {
+  id: string
+  data: {
+    review: string
+
+    name: string | null
+    email: string
+    userId: string
+    avatar: string | null
+
+    createdAt: string
+  }
+}
+
+export type FirestoreMovie = Omit<Movie, 'id'> & {
+  id: string
+  movieId: number
+}
+
+export type FirestoreMovieInput = Omit<FirestoreMovie, 'id'>

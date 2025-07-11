@@ -1,8 +1,9 @@
 import axios from 'axios'
 import {
+  Genres,
   MovieCredits,
   MovieDetails,
-  TrendingMoviesResponse,
+  MoviesResponse,
 } from '../types/types'
 
 const tmdb = axios.create({
@@ -30,7 +31,7 @@ tmdb.interceptors.request.use(
 
 export const getTrendigMovies = async () => {
   try {
-    const { data, status } = await tmdb.get<TrendingMoviesResponse>(
+    const { data, status } = await tmdb.get<MoviesResponse>(
       `${process.env.EXPO_PUBLIC_TRENDING_URL!}`,
       { params: { language: 'en-US' } }
     )
@@ -73,6 +74,63 @@ export const getMovieCredits = async (id: number) => {
         params: { language: 'en-US' },
       }
     )
+
+    if (status !== 200) {
+      throw new Error('Some issues with getting movies')
+    }
+
+    return data
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message)
+    }
+  }
+}
+
+export const getGenresList = async () => {
+  try {
+    const { data, status } = await tmdb.get<{ genres: Genres[] }>(
+      `genre/movie/list`,
+      {
+        params: { language: 'en-US' },
+      }
+    )
+
+    if (status !== 200) {
+      throw new Error('Some issues with getting movies')
+    }
+
+    return data.genres
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message)
+    }
+  }
+}
+
+export const getMovieByName = async (search: string) => {
+  try {
+    const { data, status } = await tmdb.get<MoviesResponse>(`search/movie`, {
+      params: { language: 'en-US', query: search },
+    })
+
+    if (status !== 200) {
+      throw new Error('Some issues with getting movies')
+    }
+
+    return data
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message)
+    }
+  }
+}
+
+export const getMoviesByGenre = async (genreIds: number[]) => {
+  try {
+    const { data, status } = await tmdb.get<MoviesResponse>(`discover/movie`, {
+      params: { language: 'en-US', with_genres: genreIds.join(',') },
+    })
 
     if (status !== 200) {
       throw new Error('Some issues with getting movies')

@@ -11,7 +11,9 @@ import 'react-native-reanimated'
 
 import { AuthProvider } from '@/features/auth/AuthProvider/AuthProvider'
 import { useColorScheme } from '@/hooks/useColorScheme'
+import { toastConfig } from '@/shared/components/toastConfig/toastConfig'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import Toast from 'react-native-toast-message'
 
 const queryClient = new QueryClient()
 
@@ -37,6 +39,7 @@ export default function RootLayout() {
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               <Stack.Screen name="+not-found" />
             </Stack>
+            <Toast config={toastConfig} />
             <StatusBar style="auto" />
           </ThemeProvider>
         </AuthProvider>

@@ -1,40 +1,30 @@
-import { auth } from '@/core/services/firebase'
 import SocialAuthButtons from '@/features/auth/components/SocialAuthButtons/SocialAuthButtons'
+import { useSignUp } from '@/features/auth/hooks/useSignUp'
 import AppLogo from '@/shared/components/AppLogo/AppLogo'
 import AuthRedirectText from '@/shared/components/AuthRedirectText/AuthRedirectText'
+import { ControlledTextInput } from '@/shared/components/ControlledTextInput/ControlledTextInput'
 import PseudoElement from '@/shared/components/PseudoElement/PseudoElement'
 import TermsCheckbox from '@/shared/components/TermsCheckbox/TermsCheckbox'
 import { Colors } from '@/shared/constants/Colors'
-import React, { useState } from 'react'
+import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Button, TextInput } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const SignUp = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [username, setUsername] = useState('')
+  const { control, handleSubmit, isSubmitting } = useSignUp()
 
-  const signUp = async () => {
-    const user = await auth.createUserWithEmailAndPassword(email, password)
-
-    await user.user.updateProfile({
-      displayName: username,
-    })
-  }
   return (
     <SafeAreaView style={styles.container}>
       <AppLogo text="Create an account" />
       <View style={styles.form}>
-        <TextInput
+        <ControlledTextInput
           mode="outlined"
-          style={{ backgroundColor: '#1F1F1F', color: '#fff' }}
-          left={<TextInput.Icon icon={'account'} color={'#fff'} />}
-          textColor="#fff"
-          label={'Username'}
+          control={control}
+          name="username"
           placeholderTextColor={'#fff'}
-          value={username}
-          onChangeText={(text) => setUsername(text)}
+          label={'Username'}
+          left={<TextInput.Icon icon={'account'} color={'#fff'} />}
           theme={{
             colors: {
               primary: '#fff',
@@ -44,16 +34,13 @@ const SignUp = () => {
             },
           }}
         />
-        <TextInput
+        <ControlledTextInput
           mode="outlined"
-          style={{ backgroundColor: '#1F1F1F', color: '#fff' }}
-          left={<TextInput.Icon icon={'email'} color={'#fff'} />}
-          textColor="#fff"
+          control={control}
+          name="email"
           keyboardType="email-address"
           label={'Email address'}
-          placeholderTextColor={'#fff'}
-          value={email}
-          onChangeText={(text) => setEmail(text)}
+          left={<TextInput.Icon icon={'email'} color={'#fff'} />}
           theme={{
             colors: {
               primary: '#fff',
@@ -63,30 +50,29 @@ const SignUp = () => {
             },
           }}
         />
-        <TextInput
-          style={{ backgroundColor: '#1F1F1F', color: '#fff' }}
+        <ControlledTextInput
+          mode="outlined"
+          control={control}
+          name="password"
           keyboardType="visible-password"
-          textColor="#fff"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
+          label={'Password'}
+          left={<TextInput.Icon icon={'lock'} color={'#fff'} />}
           theme={{
             colors: {
               primary: '#fff',
+              onSurface: '#fff',
               placeholder: '#fff',
               text: '#fff',
-              onSurface: '#fff',
             },
           }}
-          mode="outlined"
-          left={<TextInput.Icon icon={'lock'} color={'#fff'} />}
-          label={'Password'}
         />
         <TermsCheckbox text="Accept terms and condition" />
         <Button
           labelStyle={{ fontSize: 18 }}
           textColor="#fff"
           style={styles.btn}
-          onPress={signUp}
+          onPress={handleSubmit}
+          disabled={isSubmitting}
         >
           Sign Up
         </Button>
